@@ -1,8 +1,11 @@
 <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>Dashboard</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
   
   <ion-content class="ion-padding">
     <ion-grid fixed>
@@ -13,7 +16,9 @@
           { title: 'Total Items', value: totalItems(), icon: 'cube-outline' },
           { title: 'Ongoing Rentals', value: ongoingRentals(), icon: 'sync-outline' },
           { title: 'Pending Returns', value: pendingReturns(), icon: 'time-outline' },
-          { title: 'Today\'s Income', value: '₹' + todaysIncome(), icon: 'cash-outline' }
+          { title: 'Today\'s Income', value: '₹' + todaysIncome(), icon: 'cash-outline' },
+          { title: 'Bookings Today', value: bookingsToday(), icon: 'calendar-outline' },
+          { title: 'Items Under Repair', value: maintenanceItems(), icon: 'construct-outline' }
         ]">
           <ion-card class="metric-card">
             <ion-card-header>
@@ -28,7 +33,7 @@
       </ion-row>
   
       <!-- Additional Widgets -->
-      <h2 class="section-title">Bookings Today</h2>
+      <!-- <h2 class="section-title">Bookings Today</h2>
       <ion-card class="summary-card">
         <ion-card-header>
           <ion-icon name="calendar-outline" class="card-icon"></ion-icon>
@@ -44,7 +49,7 @@
           <div class="card-title">Items Under Repair</div>
         </ion-card-header>
         <ion-card-content>{{ maintenanceItems() }} items</ion-card-content>
-      </ion-card>
+      </ion-card> -->
   
       <h2 class="section-title">Income Trends</h2>
       <ion-card class="chart-card">

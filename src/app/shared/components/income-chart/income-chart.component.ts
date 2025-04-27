@@ -1,24 +1,23 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartOptions, ChartType, ChartData } from 'chart.js';
-// import { Label } from 'ng2-charts';
-import { CommonModule } from '@angular/common'; // Import CommonModule for ngIf, ngFor, etc.
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-income-chart',
-  standalone: true,  // Mark this as a standalone component
-  imports: [CommonModule], // Import CommonModule for common Angular directives
+  standalone: true,
   templateUrl: './income-chart.component.html',
   styleUrls: ['./income-chart.component.scss'],
+  imports: [CommonModule],
 })
-export class IncomeChartComponent {
+export class IncomeChartComponent implements OnChanges {
   @Input() data: number[] = [];
   @Input() labels: string[] = [];
 
   public lineChartData: ChartData<'line'> = {
-    labels: this.labels,
+    labels: [],
     datasets: [
       {
-        data: this.data,
+        data: [],
         label: 'Income',
         borderColor: 'rgba(0, 123, 255, 0.8)',
         backgroundColor: 'rgba(0, 123, 255, 0.3)',
@@ -39,7 +38,6 @@ export class IncomeChartComponent {
       y: {
         ticks: {
           display: true,
-          // beginAtZero: true,
         },
       },
     },
@@ -47,5 +45,25 @@ export class IncomeChartComponent {
 
   public lineChartType: ChartType = 'line';
 
-  constructor() {}
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['data'] || changes['labels']) {
+      this.updateChartData();
+    }
+  }
+
+  private updateChartData() {
+    this.lineChartData = {
+      labels: this.labels,
+      datasets: [
+        {
+          data: this.data,
+          label: 'Income',
+          borderColor: 'rgba(0, 123, 255, 0.8)',
+          backgroundColor: 'rgba(0, 123, 255, 0.3)',
+          fill: true,
+          tension: 0.4,
+        },
+      ],
+    };
+  }
 }

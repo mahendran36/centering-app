@@ -57,7 +57,7 @@
           </ion-note>
         </ion-item>
 
-        <div class="dimensions-group">
+        <!-- <div class="dimensions-group"> -->
           <ion-item>
             <ion-input label="Length (ft)" fill="outline" label-placement="floating" formControlName="length" type="number"></ion-input>
             <ion-note slot="error" *ngIf="materialForm.get('length')?.touched && materialForm.get('length')?.invalid">
@@ -78,7 +78,7 @@
               {{ getErrorMessage('thickness') }}
             </ion-note>
           </ion-item>
-        </div>
+        <!-- </div> -->
 
         <ion-item>
           <ion-input label="Rental Rate (₹/day)" fill="outline" label-placement="floating" formControlName="rentalRate" type="number"></ion-input>
