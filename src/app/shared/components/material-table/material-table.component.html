@@ -1,0 +1,25 @@
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let header of headers">{{ header.label }}</th>
+        <th *ngIf="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of data">
+        <td *ngFor="let header of headers">
+          {{ getValue(item, header) }}
+        </td>
+        <td *ngIf="actions" class="actions-cell">
+          <ion-button fill="clear" color="primary" (click)="onEdit.emit(item.id)">
+            <ion-icon name="create"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" color="danger" (click)="onDelete.emit(item.id)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

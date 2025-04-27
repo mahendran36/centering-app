@@ -1,0 +1,151 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Dashboard</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="ion-padding">
+    <ion-grid fixed>
+  
+      <!-- Top Metrics Cards -->
+      <ion-row class="metrics-row">
+        <ion-col size="6" sizeMd="3" *ngFor="let card of [
+          { title: 'Total Items', value: totalItems(), icon: 'cube-outline' },
+          { title: 'Ongoing Rentals', value: ongoingRentals(), icon: 'sync-outline' },
+          { title: 'Pending Returns', value: pendingReturns(), icon: 'time-outline' },
+          { title: 'Today\'s Income', value: '₹' + todaysIncome(), icon: 'cash-outline' }
+        ]">
+          <ion-card class="metric-card">
+            <ion-card-header>
+              <ion-icon [name]="card.icon" class="metric-icon"></ion-icon>
+              <div class="metric-title">{{ card.title }}</div>
+            </ion-card-header>
+            <ion-card-content>
+              <div class="metric-value">{{ card.value }}</div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+  
+      <!-- Additional Widgets -->
+      <h2 class="section-title">Bookings Today</h2>
+      <ion-card class="summary-card">
+        <ion-card-header>
+          <ion-icon name="calendar-outline" class="card-icon"></ion-icon>
+          <div class="card-title">Bookings Today</div>
+        </ion-card-header>
+        <ion-card-content>{{ bookingsToday() }} bookings</ion-card-content>
+      </ion-card>
+  
+      <h2 class="section-title">Maintenance Items</h2>
+      <ion-card class="summary-card">
+        <ion-card-header>
+          <ion-icon name="construct-outline" class="card-icon"></ion-icon>
+          <div class="card-title">Items Under Repair</div>
+        </ion-card-header>
+        <ion-card-content>{{ maintenanceItems() }} items</ion-card-content>
+      </ion-card>
+  
+      <h2 class="section-title">Income Trends</h2>
+      <ion-card class="chart-card">
+        <ion-card-header>
+          <ion-icon name="trending-up-outline" class="card-icon"></ion-icon>
+          <div class="card-title">Income Trends</div>
+        </ion-card-header>
+        <ion-card-content>
+          <!-- Income Chart Here -->
+          <app-income-chart [data]="incomeTrend()" [labels]="labels()"></app-income-chart>
+        </ion-card-content>
+      </ion-card>
+  
+      <h2 class="section-title">Upcoming Returns</h2>
+      <ion-card class="summary-card">
+        <ion-card-header>
+          <ion-icon name="calendar-clear-outline" class="card-icon"></ion-icon>
+          <div class="card-title">Upcoming Returns</div>
+        </ion-card-header>
+        <ion-card-content>
+          <ul>
+            <li *ngFor="let return of upcomingReturns()">
+              {{ return.customer }} - {{ return.date }}
+            </li>
+          </ul>
+        </ion-card-content>
+      </ion-card>
+  
+      <!-- Quick Actions -->
+      <h2 class="section-title">Quick Actions</h2>
+      <ion-row class="quick-actions-row">
+        <ion-col size="6" sizeMd="2" *ngFor="let action of [
+          { title: 'Add Rental', icon: 'add-circle-outline' },
+          { title: 'Return Material', icon: 'return-up-back-outline' },
+          { title: 'New Customer', icon: 'person-add-outline' }
+        ]">
+          <ion-button expand="block" fill="outline" color="primary" (click)="onActionClick(action.title)">
+            <ion-icon slot="start" [name]="action.icon"></ion-icon>
+            {{ action.title }}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+  
+      <!-- Top Customers -->
+      <h2 class="section-title">Top Customers</h2>
+      <ion-card class="summary-card">
+        <ion-card-header>
+          <ion-icon name="person-outline" class="card-icon"></ion-icon>
+          <div class="card-title">Top Customers</div>
+        </ion-card-header>
+        <ion-card-content>
+          <ul>
+            <li *ngFor="let customer of topCustomers()">
+              {{ customer.name }} - ₹{{ customer.amount }}
+            </li>
+          </ul>
+        </ion-card-content>
+      </ion-card>
+  
+      <!-- Pending Invoices -->
+      <h2 class="section-title">Pending Invoices</h2>
+      <ion-card class="summary-card">
+        <ion-card-header>
+          <ion-icon name="document-text-outline" class="card-icon"></ion-icon>
+          <div class="card-title">Pending Invoices</div>
+        </ion-card-header>
+        <ion-card-content>
+          <ul>
+            <li *ngFor="let invoice of pendingInvoices()">
+              {{ invoice.customer }} - ₹{{ invoice.amount }} | Due: {{ invoice.date }}
+            </li>
+          </ul>
+        </ion-card-content>
+      </ion-card>
+  
+      <!-- Receipt History -->
+      <h2 class="section-title">Receipt History</h2>
+      <ion-list>
+        <ion-item *ngFor="let receipt of receiptHistory()">
+          <ion-avatar slot="start">
+            <ion-icon name="receipt-outline" class="receipt-icon"></ion-icon>
+          </ion-avatar>
+          <ion-label>
+            <h3>{{ receipt.customer }}</h3>
+            <p>Date: {{ receipt.date }} | Amount: ₹{{ receipt.amount }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+  
+      <!-- Profile Completion Widget -->
+      <h2 class="section-title">Profile Completion</h2>
+      <ion-card class="summary-card">
+        <ion-card-header>
+          <ion-icon name="person-circle-outline" class="card-icon"></ion-icon>
+          <div class="card-title">Profile Completion</div>
+        </ion-card-header>
+        <ion-card-content>
+          <div>Completion: {{ profileCompletion() }}%</div>
+        </ion-card-content>
+      </ion-card>
+  
+    </ion-grid>
+  </ion-content>
+  

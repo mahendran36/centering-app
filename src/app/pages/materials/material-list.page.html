@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Material List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Filter Section -->
+  <div class="filter-header">
+    <app-advance-filter
+      [filters]="filters"
+      (onFilterChange)="handleFilterChange($event)"
+    >
+    </app-advance-filter>
+  
+    <ion-button [routerLink]="'/add-materials'" color="secondary" class="filter-button">
+      Create
+    </ion-button>
+  </div>
+  
+  <!-- Mobile View -->
+  <ion-list *ngIf="isMobile()">
+    <ion-item *ngFor="let material of filteredMaterials()">
+      <ion-label>
+        <h2>{{ material.name }}</h2>
+        <p>Plate Size: {{ material.plateSize }}</p>
+        <p>Rental Rate: ₹{{ material.rentalRate }} / day</p>
+        <p>Status: {{ material.status }}</p>
+      </ion-label>
+      <ion-button slot="end" fill="clear" color="danger" (click)="deleteMaterial(material.id)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- Web View -->
+  <app-material-table 
+    *ngIf="!isMobile()" 
+    [headers]="tableHeaders"
+    [data]="filteredMaterials()"
+    (onDelete)="deleteMaterial($event)"
+    (onEdit)="editMaterial($event)">
+  </app-material-table>
+</ion-content>
+  

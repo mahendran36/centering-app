@@ -1,0 +1,31 @@
+<div class="filter-bar">
+  <div class="filters">
+    <div 
+      class="filter" 
+      *ngFor="let filter of filters" 
+      (click)="toggleDropdown(filter.label)"
+    >
+      {{ filter.label }}
+      <ion-icon name="chevron-down-outline"></ion-icon>
+
+      <div 
+        class="dropdown" 
+        *ngIf="openDropdown() === filter.label"
+      >
+        <ion-item 
+          *ngFor="let value of filter.options" 
+          lines="none"
+          (click)="toggleValue(filter.label, value); $event.stopPropagation()"
+        >
+          <ion-checkbox 
+            [checked]="isSelected(filter.label, value)"
+            slot="start"
+          ></ion-checkbox>
+          <ion-label>{{ value }}</ion-label>
+        </ion-item>
+      </div>
+    </div>
+  </div>
+
+  <ion-searchbar placeholder="Search..." class="search-input"></ion-searchbar>
+</div>
