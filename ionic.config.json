@@ -1,7 +1,0 @@
-{
-  "name": "centering-app",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
